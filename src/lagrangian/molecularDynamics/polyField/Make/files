@@ -40,10 +40,11 @@ mappingModels/basic/polyMappingModel/polyMappingModel.C
 mappingModels/basic/polyMappingModels/polyMappingModels.C
 mappingModels/derived/polyMappingZone/polyMappingZone.C
 
-/*  FIELD MEASUREMENTS */
+/*  FIELD MEASUREMENTS & POST-PROCESSING */
 
 macroscopicProperties/basic/polyFieldProperties/polyFieldProperties.C
 macroscopicProperties/basic/polyField/polyField.C
+macroscopicProperties/basic/polyPOD/polyPOD.C
 
 /*  - COMBINED  */
 

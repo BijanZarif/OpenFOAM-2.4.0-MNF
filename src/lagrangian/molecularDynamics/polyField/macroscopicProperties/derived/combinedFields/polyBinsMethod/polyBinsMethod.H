@@ -121,11 +121,10 @@ private:
         List<bool> outputField_;
 
         scalar nAvTimeSteps_;
-        
-//         bool averagingAcrossManyRuns_;
+
         bool resetAtOutput_;
         
-        
+        bool enablePOD_;
         
     // Private Member Functions
         

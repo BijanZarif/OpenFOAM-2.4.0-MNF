@@ -15,8 +15,6 @@ fi
 
 #----------------------------------------------------------------------
 
-clean
-
 cases="mesh  polyatomics"
 
 for case in $cases

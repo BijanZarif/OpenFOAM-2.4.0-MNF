@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 1991-2007 OpenCFD Ltd.
+    \\  /    A nd           | Copyright (C) 1991-2005 OpenCFD Ltd.
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -23,26 +23,36 @@ License
     Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 Class
+    pod
 
 Description
-    The model which outputs standard properties to the terminal screen 
-    in an MD simulation run.
+    applied to a transient full MD simulation to compute mass flow rates and 
+    density 
 
 SourceFiles
-    polyARCHERI.H
-    polyARCHER.C
-    polyARCHERIO.C
+    podI.H
+    pod.C
+    podIO.C
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef polyARCHER_H
-#define polyARCHER_H
+#ifndef polyPOD_H
+#define polyPOD_H
 
-#include "polyField.H"
-#include "vector.H"
-#include "polyMesh.H"
-#include "volFields.H"
-#include "polyMoleculeCloud.H"
+#include "Time.H"
+#include "IOdictionary.H"
+#include "IOstreams.H"
+//#include "polyMesh.H"
+#include "mdPoly.H"
+#include "IFstream.H"
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+
+#include "scalarMatrices.H"
+#include "SVD.H"
+#include "SortableList.H"
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -51,81 +61,54 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                           Class polyARCHER Declaration
+                           Class pod Declaration
 \*---------------------------------------------------------------------------*/
 
-class polyARCHER
-:
-	public polyField
+class polyPOD
 {
 
 private:
 
     // Private data
 
-        //- subDictionary containing the properties
-        dictionary propsDict_;
-        
-        propertyField fields_;
-        
-        word nameOfFile_;
-        
-        fileName pathName_;
+        const polyMesh& mesh_;
+        const dictionary& dict_;
+        fileName fieldPath_;
+        word fieldName_;
+        label nTimeSteps_;
+        label nBins_;
+        scalarRectangularMatrix massFlow_;
+        scalarRectangularMatrix massFlowSmoother_;
         
     // Private Member Functions
     
-        void outputInitialisation();
-        void outputTime();
-        
+        void computePOD
+		(
+		    const scalarRectangularMatrix& data,
+            const label& noSnapShots, //N
+            const label& nBins // 200
+		);
         
 public:
 
-    //- Runtime type information
-    TypeName("polyARCHER");
-
     // Constructors
 
-        //- Construct from components
-        polyARCHER
-		(
-		    Time& t,
+        //- Construct from properties
+    	polyPOD
+        (
             const polyMesh& mesh,
-            polyMoleculeCloud& molCloud,
             const dictionary& dict
-		);
+        );
 
     // Destructor
 
- 		~polyARCHER();
+        ~polyPOD();
 
     // Member Functions
-
-        //- create initial field
-        void createField();
-
-        //- calculate field
-        void calculateField();
-
-        //- write field
-        void writeField();
-
-        void measureDuringForceComputation
-        (
-            polyMolecule* molI,
-            polyMolecule* molJ
-        );
-
-        void measureDuringForceComputationSite
-        (
-            polyMolecule* molI,
-            polyMolecule* molJ,
-            label sI,
-            label sJ
-        );
-
-        const propertyField& fields() const;
-}; 		
-
+    
+        void read();
+        void write();
+};
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

@@ -125,6 +125,13 @@ polyBinsMethod::polyBinsMethod
 
     resetAtOutput_ = Switch(propsDict_.lookup("resetAtOutput"));
     
+    // determine whether to apply POD smoothing method before output
+
+    if(propsDict_.found("enablePOD"))
+    	enablePOD_ = Switch(propsDict_.lookup("enablePOD"));
+    else
+    	enablePOD_ = false;
+
     if (!resetAtOutput_ && readFromStore )
     {
         Info << " Averaging across many runs. Reading from dictionary:" << endl;
@@ -161,8 +168,6 @@ polyBinsMethod::polyBinsMethod
         }
        
     }
-
-   
     
     // create bin model
     binModel_ = autoPtr<binModel>
@@ -218,8 +223,6 @@ polyBinsMethod::polyBinsMethod
                 propertyNames.append(propertyName);
             }
         }
-
-        //propertyNames.shrink();
 
         if(findIndex(propertyNames, "density") == -1)
         {

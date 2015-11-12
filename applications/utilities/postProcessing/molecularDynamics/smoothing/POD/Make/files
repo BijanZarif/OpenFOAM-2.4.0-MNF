@@ -1,0 +1,3 @@
+mdPODSmoothing.C
+
+EXE = $(FOAM_APPBIN)/mdPODSmoothing

@@ -3,7 +3,7 @@
 printUsage () {
 cat << EOF
    Usage: $0 
-   Applies wclean to all utilities
+   Applies wmake to all utilities
 EOF
 }
 
@@ -15,12 +15,13 @@ fi
 
 #----------------------------------------------------------------------
 
-cases="mesh  polyatomics"
+cases="smoothing"
 
 for case in $cases
 do
   echo ""
   cd $case
-  ./wcleanAll
+  echo "wmake $case"
+  ./wmakeAll
   cd ../
 done
