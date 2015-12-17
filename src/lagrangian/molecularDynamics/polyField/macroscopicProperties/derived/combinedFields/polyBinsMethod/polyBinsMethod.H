@@ -54,6 +54,7 @@ SourceFiles
 #include "polyMoleculeCloud.H"
 #include "distribution.H"
 #include "binModel.H"
+#include "polyPOD.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -126,6 +127,8 @@ private:
         
         bool enablePOD_;
         
+        //polyPOD podSmooth;
+
     // Private Member Functions
         
         

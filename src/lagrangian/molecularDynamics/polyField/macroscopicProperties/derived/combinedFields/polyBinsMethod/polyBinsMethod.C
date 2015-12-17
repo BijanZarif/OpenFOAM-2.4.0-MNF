@@ -125,7 +125,7 @@ polyBinsMethod::polyBinsMethod
 
     resetAtOutput_ = Switch(propsDict_.lookup("resetAtOutput"));
     
-    // determine whether to apply POD smoothing method before output
+    // determine whether to apply POD smoothing method
 
     if(propsDict_.found("enablePOD"))
     	enablePOD_ = Switch(propsDict_.lookup("enablePOD"));

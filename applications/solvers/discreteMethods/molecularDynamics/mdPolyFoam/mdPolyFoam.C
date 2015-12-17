@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     );
     
 
-    Info << "\nStarting time loop\n" << endl;
+    Info << "\nStarting timmmeh loop\n" << endl;
 
     clockTimer evolveTimer(runTime, "evolve", true);
 
